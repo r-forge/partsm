@@ -1,0 +1,16 @@
+
+
+To install the partsm add-in for the Rcmdr proceed as follows:
+
+  - Copy the file 'partsm/R-cmdr/Rcmdr-partsm.R' in the 'Rcmdr/etc' subdirectory. This file contains
+    functions for launching the corresponding dialog boxes.
+
+  - To add the menus, copy the text in the file 'partsm/R-cmdr/Rcmdr-menus.txt' in the desired place inside
+    the file 'Rcmdr/etc/Rcmdr-menus.txt', for example after the 'Tools' menu (After a line similar to 'item
+    topMenu cascade "Tools" toolsMenu'.
+
+For the package to be available from the Rcmdr, the item 'Load partsm' must be first clicked in the 'partsm' menu. In this version, the object to which the functions can be applied must be of class 'ts', that is, time series. The 'Rcmdr' works with data frames objects, instead. The dialog boxes as well as the functions for 'partsm' automatically detect all the 'ts' objects in the working space, hence, there is no need to have an active data set available.
+
+In addition, the data in 'partsm' can be loaded from the 'Data - Data in packages - Read data set from an attached package' menu, ignoring the error message for the functions regarding the 'partsm' menu.
+
+The user must bear in mind that, in this version, the interface does not allow to apply all the functions nor arguments available in the command line functions implemented in 'partsm'.

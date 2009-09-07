@@ -1,0 +1,142 @@
+<html><head><title>R: Periodic Autoregressive Time Series Models</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="../../R.css">
+</head><body>
+<h1>Periodic Autoregressive Time Series Models <img class="toplogo" src="../../../doc/html/logo.jpg" alt="[R logo]"></h1>
+
+<hr>
+
+<div align="center">
+<a href="../../../doc/html/packages.html"><img src="../../../doc/html/left.jpg"
+alt="[Package List]" width="30" height="30" border="0"></a>
+<a href="../../../doc/html/index.html"><img src="../../../doc/html/up.jpg"
+alt="[Top]" width="30" height="30" border="0"></a>
+</div>
+
+<h2>Documentation for package `partsm' version 1.0</h2>
+
+<h2>User Guides and Package Vignettes</h2>
+Read <a href="../doc/index.html">overview</a> or browse <a href="../doc">directory</a>.
+
+<h2>Help Pages</h2>
+
+<p align="center">
+<a href="#"></a>
+<a href="#Data">[Data]</a>
+<a href="#Functions">[Functions]</a>
+<a href="#Classes">[Classes]</a>
+<a href="#Methods">[Methods]</a>
+
+<h2><a name="Data">-- Data: Quarterly Macroeconomic Time Series --</a></h2>
+<table width="100%">
+<tr><td width="25%"><a href="canun.html">canun</a></td>
+<td>Unemployment in Canada (1960.1-1987.4)</td></tr>
+<tr><td width="25%"><a href="canunsa.html">canunsa</a></td>
+<td>Unemployment in Canada. (1960.1-1987.4). Seasonally Adjusted</td></tr>
+<tr><td width="25%"><a href="gergnp.html">gergnp</a></td>
+<td>Real GNP in Germany (1960.1-1990.4)</td></tr>
+<tr><td width="25%"><a href="gergnpsa.html">gergnpsa</a></td>
+<td>Real GNP in Germany (1960.1-1990.4). Seasonally Adjusted</td></tr>
+<tr><td width="25%"><a href="swndcpc.html">swndcpc</a></td>
+<td>Real per Capita non-durables Consumption in Sweden (1963.1 - 1988.1)</td></tr>
+<tr><td width="25%"><a href="swdipc.html">swdipc</a></td>
+<td>Real per Capita Disposable Income in Sweden (1963.1-1988.1)</td></tr>
+<tr><td width="25%"><a href="ukcons.html">ukcons</a></td>
+<td>United Kingdom Total Consumption (1955.1-1988.4)</td></tr>
+<tr><td width="25%"><a href="ukexp.html">ukexp</a></td>
+<td>United Kindom Exports of Goods and Services (1955.1-1988.4)</td></tr>
+<tr><td width="25%"><a href="ukgdp.html">ukgdp</a></td>
+<td>United Kingdom Gross Domestic Product (1955.1-1988.4)</td></tr>
+<tr><td width="25%"><a href="ukimp.html">ukimp</a></td>
+<td>United Kindom Imports of Goods and Services (1955.1-1988.4)</td></tr>
+<tr><td width="25%"><a href="ukinvest.html">ukinvest</a></td>
+<td>Real Total Investment in the United Kindom (1955.1-1988.4)</td></tr>
+<tr><td width="25%"><a href="ukndcons.html">ukndcons</a></td>
+<td>United Kindom non-durables Consumption (1955.1-1988.4)</td></tr>
+<tr><td width="25%"><a href="ukpinvest.html">ukpinvest</a></td>
+<td>United Kindom Public Investment (1962.1-1988.4)</td></tr>
+<tr><td width="25%"><a href="ukwf.html">ukwf</a></td>
+<td>United Kindom Workforce (1955.1-1988.4)</td></tr>
+<tr><td width="25%"><a href="usaipi.html">usaipi</a></td>
+<td>Total Industrial Production Index for the United States (1960.1-1991.4)</td></tr>
+<tr><td width="25%"><a href="usaipisa.html">usaipisa</a></td>
+<td>Total Industrial Production Index for the United States (1960.1-1991.4). Seasonally Adjusted</td></tr>
+</table>
+
+<h2><a name="Functions">-- Functions --</a></h2>
+<table width="100%">
+<tr><td width="25%"><a href="acf.ext1.html">acf.ext1</a></td>
+<td>Autocorrelation function for several transformations of the original data</td></tr>
+<tr><td width="25%"><a href="fit.ar.par.html">fit.ar.par</a></td>
+<td>Fit an Autoregressive or Periodic Autoregressive Model</td></tr>
+<tr><td width="25%"><a href="fit.piar.html">fit.piar</a></td>
+<td>Fit a Periodically Integrated Autoregressive Model.</td></tr>
+<tr><td width="25%"><a href="Fnextp.test.html">Fnextp.test</a></td>
+<td>Test for the Significance of the p+1 Autoregressive Parameters in an AR(p) or PAR(p) Model</td></tr>
+<tr><td width="25%"><a href="Fpar.test.html">Fpar.test</a></td>
+<td>Test for Periodic Variation in the Autoregressive Parameters</td></tr>
+<tr><td width="25%"><a href="Fpari.piar.test.html">Fpari.piar.test</a></td>
+<td>Test for a Parameter Restriction in a PAR Model.</td></tr>
+<tr><td width="25%"><a href="Fsh.html">Fsh.test</a></td>
+<td>Test for Seasonal Heteroskedasticity</td></tr>
+<tr><td width="25%"><a href="LRurpar.test.html">LRurpar.test</a></td>
+<td>Likelihood Ratio Test for a Single Unit Root in a PAR(p) Model</td></tr>
+<tr><td width="25%"><a href="plotpdiff.html">plotpdiff</a></td>
+<td>Graphical Representation of the Periodically Differenced Data</td></tr>
+<tr><td width="25%"><a href="plotpredpiar.html">plotpredpiar</a></td>
+<td>Plot of the Out-of-Sample Forecasts in a PIAR Model</td></tr>
+<tr><td width="25%"><a href="predictpiar.html">predictpiar</a></td>
+<td>Predictions for a Restricted Periodic Autoregressive Model</td></tr>
+</table>
+
+<h2><a name="Classes">-- Classes --</a></h2>
+<table width="100%">
+<tr><td width="25%"><a href="fit.partsm-class.html">fit.partsm</a></td>
+<td>fit.partsm Class</td></tr>
+<tr><td width="25%"><a href="fit.piartsm-class.html">fit.piartsm</a></td>
+<td>fit.piartsm Class</td></tr>
+<tr><td width="25%"><a href="Ftest.partsm-class.html">Ftest.partsm</a></td>
+<td>Ftest.partsm Class</td></tr>
+<tr><td width="25%"><a href="LRur.partsm-class.html">LRur.partsm</a></td>
+<td>LRur.partsm Class</td></tr>
+<tr><td width="25%"><a href="pred.piartsm-class.html">pred.piartsm</a></td>
+<td>pred.piartsm Class</td></tr>
+</table>
+
+<h2><a name="Methods">-- Methods --</a></h2>
+<table width="100%">
+<tr><td width="25%"><a href="PAR.MVrepr-method.html">PAR.MVrepr</a></td>
+<td>Method for Building the Matrices for the Multivariate Representation of a PAR Model</td></tr>
+<tr><td width="25%"><a href="PAR.MVrepr-method.html">PAR.MVrepr,fit.partsm-method</a></td>
+<td>Method for Building the Matrices for the Multivariate Representation of a PAR Model</td></tr>
+<tr><td width="25%"><a href="PAR.MVrepr-method.html">PAR.MVrepr,fit.piartsm-method</a></td>
+<td>Method for Building the Matrices for the Multivariate Representation of a PAR Model</td></tr>
+<tr><td width="25%"><a href="PAR.MVrepr-method.html">PAR.MVrepr-methods</a></td>
+<td>Method for Building the Matrices for the Multivariate Representation of a PAR Model</td></tr>
+<tr><td width="25%"><a href="show-methods.html">show</a></td>
+<td>Methods for Function 'show' in Package 'partsm'</td></tr>
+<tr><td width="25%"><a href="show-methods.html">show,fit.partsm-method</a></td>
+<td>Methods for Function 'show' in Package 'partsm'</td></tr>
+<tr><td width="25%"><a href="show-methods.html">show,fit.piartsm-method</a></td>
+<td>Methods for Function 'show' in Package 'partsm'</td></tr>
+<tr><td width="25%"><a href="show-methods.html">show,Ftest.partsm-method</a></td>
+<td>Methods for Function 'show' in Package 'partsm'</td></tr>
+<tr><td width="25%"><a href="show-methods.html">show,LRur.partsm-method</a></td>
+<td>Methods for Function 'show' in Package 'partsm'</td></tr>
+<tr><td width="25%"><a href="show-methods.html">show,pred.piartsm-method</a></td>
+<td>Methods for Function 'show' in Package 'partsm'</td></tr>
+<tr><td width="25%"><a href="show-methods.html">show-methods</a></td>
+<td>Methods for Function 'show' in Package 'partsm'</td></tr>
+<tr><td width="25%"><a href="summary-methods.html">summary</a></td>
+<td>Methods for Function 'summary' in Package 'partsm'</td></tr>
+<tr><td width="25%"><a href="summary-methods.html">summary,fit.partsm-method</a></td>
+<td>Methods for Function 'summary' in Package 'partsm'</td></tr>
+<tr><td width="25%"><a href="summary-methods.html">summary,fit.piartsm-method</a></td>
+<td>Methods for Function 'summary' in Package 'partsm'</td></tr>
+<tr><td width="25%"><a href="summary-methods.html">summary,Ftest.partsm-method</a></td>
+<td>Methods for Function 'summary' in Package 'partsm'</td></tr>
+<tr><td width="25%"><a href="summary-methods.html">summary,LRur.partsm-method</a></td>
+<td>Methods for Function 'summary' in Package 'partsm'</td></tr>
+<tr><td width="25%"><a href="summary-methods.html">summary-methods</a></td>
+<td>Methods for Function 'summary' in Package 'partsm'</td></tr>
+</table>

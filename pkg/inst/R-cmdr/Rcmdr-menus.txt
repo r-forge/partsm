@@ -1,0 +1,31 @@
+
+# Start partsm add-in.
+
+  menu  partsmMenu   topMenu     ""    ""    ""
+  menu  testsMenu    partsmMenu  ""    ""    ""
+  menu  fitMenu      partsmMenu  ""    ""    ""
+  menu  predictMenu  partsmMenu  ""    ""    ""
+  menu  plotMenu     partsmMenu  ""    ""    ""
+
+  item  partsmMenu   command     "Load partsm"    MakeLoadpartsm    ""
+
+  item  testsMenu    command     "for a single unit root"                      MakeLRurpar.test ""
+  #item  testsMenu    command     "for a parameter restriction"                 MakeFpari.piar.test    ""
+  item  testsMenu    command     "for periodicity"                             MakeFpar.test    ""
+  item  testsMenu    command     "for the significance of p+1 PAR parameters"  MakeFnextp.test  ""
+  item  partsmMenu   cascade     "Test..."                                     "testsMenu"      ""
+
+  item  fitMenu      command     "a PAR model"    Makefit.ar.par   ""
+  item  fitMenu      command     "a PIAR model"   Makefit.piar     ""
+  item  partsmMenu   cascade     "Fit..."         "fitMenu"        ""
+
+  item  predictMenu  command     "based on a PIAR model"   Makepredictpiar   ""
+  item  partsmMenu   cascade     "Forecasts..."            "predictMenu"     ""
+
+  #item  plotMenu     command     "periodically differenced data"   MakeFpar.test   ""
+  #item  plotMenu     command     "Out-of-sample forecasts"         MakeFpar.test   ""
+  #item  partsmMenu   cascade     "Plot..."                         "plotMenu"      ""
+
+  item  topMenu      cascade     "partsm"    partsmMenu     ""
+
+# End partsm add-in.
