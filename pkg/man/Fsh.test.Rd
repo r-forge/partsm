@@ -37,7 +37,7 @@
     degrees an the corresponding \eqn{p}-value.
   }
 
-  \author{Javier López-de-Lacalle \email{javlacalle@yahoo.es}.}
+  \author{Javier Lopez-de-Lacalle \email{javlacalle@yahoo.es}.}
 
 
   \examples{

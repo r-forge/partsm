@@ -43,7 +43,7 @@
     the periodic differencing filter parameters estimated under the alternative.
   }
 
-  \author{Javier López-de-Lacalle \email{javlacalle@yahoo.es}.}
+  \author{Javier Lopez-de-Lacalle \email{javlacalle@yahoo.es}.}
 
   \references{
     H.P. Boswijk and P.H. Franses (1996), Unit roots in periodic autorregressions. \emph{Journal of Time

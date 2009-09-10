@@ -48,7 +48,7 @@
      Lags at which the acf is computed, estimates of the acf, and p-values for the significance of the acf at each lag.
    }
 
-   \author{Javier López-de-Lacalle \email{javlacalle@yahoo.es}.}
+   \author{Javier Lopez-de-Lacalle \email{javlacalle@yahoo.es}.}
 
    \examples{
       ## Logarithms of the Real GNP in Germany

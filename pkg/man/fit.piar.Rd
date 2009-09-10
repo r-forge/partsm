@@ -41,7 +41,7 @@
     \code{\link{fit.piartsm-class}} for methods that display this information.
   }
 
-  \author{Javier López-de-Lacalle \email{javlacalle@yahoo.es}.}
+  \author{Javier Lopez-de-Lacalle \email{javlacalle@yahoo.es}.}
 
   \references{
     P.H. Franses: Periodicity and Stochastic Trends in Economic Time Series (Oxford University Press, 1996).

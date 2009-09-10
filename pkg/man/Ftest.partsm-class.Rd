@@ -46,6 +46,6 @@
     \code{\link{Fpari.piar.test}}.
   }
 
-  \author{Javier López-de-Lacalle \email{javlacalle@yahoo.es}.}
+  \author{Javier Lopez-de-Lacalle \email{javlacalle@yahoo.es}.}
 
 \keyword{classes}

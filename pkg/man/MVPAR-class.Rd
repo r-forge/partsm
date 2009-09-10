@@ -30,7 +30,7 @@
     P.H. Franses: Periodicity and Stochastic Trends in Economic Time Series (Oxford University Press, 1996).
   }
 
-  \author{Javier López-de-Lacalle \email{javlacalle@yahoo.es}.}
+  \author{Javier Lopez-de-Lacalle \email{javlacalle@yahoo.es}.}
 
   \seealso{
     \code{\link{PAR.MVrepr-methods}}, and \code{\link{fit.partsm-class}}.
