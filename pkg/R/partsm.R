@@ -1,18 +1,29 @@
+#################################################################
+# 
+# File:         partsm.R
+#
+# Author:       Javier Lopez de Lacalle <javlacalle@yahoo.es>
+# Maintainer:   Carlos J. Gil Bellosta  <cgb@datanalytics.com>
+#
+# Modifications: 
+#   20090909, cjgb: Changes in code style
+#
+#################################################################
 
+
+#################################################################
 ## Auxiliar functions.
+#################################################################
 
 ret <- function(vari, k)
 {
-  N <- length(vari)
-  vret <- matrix(c(1:k*N),N,k)
-  vret[,1] <- vari
-  i <- 1
-  while(i < k){
-   vret[1:i,(i+1)] <- NA
-   vret[(i+1):N, (i+1)] <- vari[1:(N-i)]
-   i <- i+1
-              }
-  vret
+    shift <- function( v ) c( NA, v[-length(v)] )
+
+    vret  <- matrix( vari, length( vari ), k ) 
+    for( i in 2:k )
+        vret[,i] <- shift( vret[,i-1] )
+
+    vret
 }
 
 ysooys <- function(yso, t0, N, s)
@@ -30,7 +41,7 @@ ysooys <- function(yso, t0, N, s)
      i <- i+1
   }
 
-# year and season to observation
+    # year and season to observation
   if(length(yso)==2)
   {
     quest1 <- which(c(index[,1] == yso[1]) == TRUE)
