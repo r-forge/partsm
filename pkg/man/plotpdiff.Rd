@@ -3,8 +3,7 @@
   \title{Graphical Representation of the Periodically Differenced Data}
 
   \description{
-    On the basis of the estimated parameters in a PIAR model, this function displays the periodically
-    differenced data, as well as two different representations of the seasonal paths for the transformed data.
+    On the basis of the estimated parameters in a PIAR model, this function displays the periodically differenced data, as well as two different representations of the seasonal paths for the transformed data.
   }
 
   \usage{

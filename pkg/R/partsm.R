@@ -12,7 +12,7 @@
 
 
 #################################################################
-## Auxiliar functions.
+## Auxiliar functions
 #################################################################
 
 ret <- function(vari, k)
@@ -20,6 +20,10 @@ ret <- function(vari, k)
     shift <- function( v ) c( NA, v[-length(v)] )
 
     vret  <- matrix( vari, length( vari ), k ) 
+
+    if( k == 1 )
+        return( vret )
+
     for( i in 2:k )
         vret[,i] <- shift( vret[,i-1] )
 
@@ -41,36 +45,36 @@ ysooys <- function(yso, t0, N, s)
      i <- i+1
   }
 
-    # year and season to observation
-  if(length(yso)==2)
+  if(length(yso)==2)                                 # year and season to observation
   {
-    quest1 <- which(c(index[,1] == yso[1]) == TRUE)
-    quest2 <- which(c(index[,2] == yso[2]) == TRUE)
-     i <- 1; out <- quest1[1]
+    quest1 <- which( index[,1] == yso[1] )
+    quest2 <- which( index[,2] == yso[2] )
+    i <- 1
+    out <- quest1[1]
     while(length(which(quest2 == quest1[i])) != 1){
       i <- i+1
       out <- quest1[i]
     }
   }
 
-# observation to year and season
-  if(length(yso)==1)
+
+  if(length(yso)==1)                                 # observation to year and season
     out <- index[which(index[,3]==yso),1:2]
 
   list(out, index)
 }
 
-Dummy <- function(wts, y0, s0, yN, sN)
-{
-   aux   <- ysooys(1, start(wts), length(wts), frequency(wts))[[2]][,1]
-   years <- seq(aux[1], aux[length(aux)])
-   Mdum  <- rep(0, wts$N)
-   obs0  <- (which(years==y0)-1) * frequency(wts) + s0
-   obsN  <- (which(years==yN)-1) * frequency(wts) + sN
-   Mdum[obs0:obsN] <- 1
-   Mdum <- matrix(Mdum, ncol=1)
-   Mdum
-}
+#Dummy <- function(wts, y0, s0, yN, sN)
+#{
+#   aux   <- ysooys(1, start(wts), length(wts), frequency(wts))[[2]][,1]
+#   years <- seq(aux[1], aux[length(aux)])
+#   Mdum  <- rep(0, wts$N)
+#   obs0  <- (which(years==y0)-1) * frequency(wts) + s0
+#   obsN  <- (which(years==yN)-1) * frequency(wts) + sN
+#   Mdum[obs0:obsN] <- 1
+#   Mdum <- matrix(Mdum, ncol=1)
+#   Mdum
+#}
 
 SeasDummy <- function(wts, s, t0, type)
 {
@@ -82,7 +86,7 @@ SeasDummy <- function(wts, s, t0, type)
    k    <- 0
 
    for(j in 1:s){
-     ifelse(sq[length(sq)] + k > N, n <- length(sq)-1, n <- N)
+     n <- ifelse(sq[length(sq)] + k > N, length(sq)-1,  N)
      for(i in 1:n)
        auxD[sq[i]+k,j] <- 1
      k <- k+1
@@ -105,8 +109,9 @@ SeasDummy <- function(wts, s, t0, type)
 
    for(i in 1:N){
      for(k in 1:(s-qq-1)){
-         VFE[i,sq1[k]] <- cos((j[k]*pi/qq)*i)
-         VFE[i,sq2[k]] <- sin((j[k]*pi/qq)*i)
+        tmp <- i * j[k] * pi / qq
+         VFE[i,sq1[k]] <- cos(tmp)
+         VFE[i,sq2[k]] <- sin(tmp)
      }
      VFE[i,(s-1)] <- (-1)^i
    }
@@ -141,25 +146,21 @@ fit.ar.par <- function(wts, type, detcomp, p)
   if(length(detcomp$regvar) > 1)
     MDT <- as.matrix(data.frame(.=aux1, .=aux2, RegVar=detcomp$regvar))
 
+    lm.ar <- lm.par <- par.coeffs <- ar.coeffs <- NULL
+
   switch(type,
     "AR" = {
             if(p == 0){
               lm.ar <- lm(MLag[,1] ~ 0+MDT)
-              lm.par <- par.coeffs <- ar.coeffs <- NULL
-              #out <- list(lm=lm1, sumlm=summary(lm1))
             }
             if(p > 0){
               lm.ar <- lm(MLag[,1] ~ 0+MLag[,2:(p+1)] + MDT)
               ar.coeffs <- matrix(lm.ar$coef[1:p], nrow=1, byrow=TRUE)
-              lm.par <- par.coeffs <- NULL
-              #out <- list(lm=lm1, sumlm=summary(lm1), ar.coeffs=lm.ar$coef[1:p])
             } },
 
     "PAR" = {
              if(p == 0){
-               lm.par <- lm(MLag[,1] ~ 0+MDT); par.coeffs <- NULL
-               lm.ar <- par.coeffs <- ar.coeffs <- NULL
-               #out <- list(lm=lm1, sumlm=summary(lm1))
+               lm.par <- lm(MLag[,1] ~ 0+MDT)
              }
              if(p > 0){
                Yperlag <- matrix(nrow=length(wts), ncol=(p*s))
@@ -169,9 +170,6 @@ fit.ar.par <- function(wts, type, detcomp, p)
                }
                lm.par <- lm(MLag[,1] ~ 0+Yperlag + MDT)
                par.coeffs <- matrix(lm.par$coef[1:(p*s)], nrow=p, byrow=TRUE)
-               lm.ar <- ar.coeffs <- NULL
-               #out <- list(lm=lm1, sumlm=summary(lm1),
-               #            ar.coeffs=matrix(lm.par$coef[1:(p*s)], nrow=p, byrow=TRUE))
              } }
   )
   ##~ out
@@ -239,8 +237,8 @@ Fsh.test <- function(res, s)
   RSS0 <- sum(residuals(lm1)^2)
   RSS1 <- sum(residuals(lm2)^2)
 
-  df <- c((s-1), length(res) - length(coef(lm1)))
-  Fsh <- ((RSS0-RSS1)/df[1]) / (RSS1/(df[2]-df[1]))
+  df   <- c( s-1, length(res) - length(coef(lm1)))
+  Fsh  <- ((RSS0-RSS1)/df[1]) / (RSS1/(df[2]-df[1]))
   pval <- 1 - pf(q=Fsh, df1=df[1], df2=df[2], log=FALSE)
 
   ref1 <- c(1, 0.1, 0.05, 0.01, 0.001)
@@ -251,7 +249,7 @@ Fsh.test <- function(res, s)
       Fstat=Fsh, df=df, pval=pval, pvl=pvl, h0md=lm1, hamd=lm2)
 }
 
-##~ Representación posible si las raíces del modelo en forma VQ son reales (ver).
+##~ Representacion posible si las raices del modelo en forma VQ son reales (ver).
 fit.piar <- function(wts, detcomp, p, initvalues=NULL)
 {
   if(p > 2)
@@ -431,7 +429,7 @@ LRurpar.test <- function(wts, detcomp, p)
   n <- length(residuals(lmpar@lm.par))
   LR <- n * log(RSS0/RSS1, base = exp(1))
   LRtau <- sign(prod(par.phis[1,]) - 1) * sqrt(LR)
-  ##~ poner output de fit.ar.par como lista en la que se nombre a alpha y beta, en lugar de coger la primera fila de una matriz para hacer prod(par.phis[1,]).
+  ## poner output de fit.ar.par como lista en la que se nombre a alpha y beta, en lugar de coger la primera fila de una matriz para hacer prod(par.phis[1,]).
 
   new("LRur.partsm", test.label="LRurpar",
       test.name="Likelihood ratio test for a single unit root in a PAR model", p=p,
@@ -439,7 +437,7 @@ LRurpar.test <- function(wts, detcomp, p)
   ##~ list(LR=LR, LRtau=LRtau)
 }
 
-##~ Hacer predictpiar usando métodos para cada parte, PAR.MVrepr, Omegas,...
+##~ Hacer predictpiar usando metodos para cada parte, PAR.MVrepr, Omegas,...
 predictpiar <- function(wts, p, hpred)
 {
   t0 <- start(wts)
@@ -639,7 +637,7 @@ setMethod("summary", "fit.partsm",
   }
 )
 
-##~ Añadir slot con detcomp (.Rd), y poner en la primera línea de cat.
+##~ Annadir slot con detcomp (.Rd), y poner en la primera linea de cat.
 setMethod("show", "fit.piartsm",
   function(object)
   {
@@ -896,20 +894,19 @@ setMethod("show", "MVPIAR",
 
 .PAR.MV <- function(phi, s)
 {
-  paux <- length(phi)/s
-  P <- 1 + as.integer((paux-1)/s)
+    paux <- length(phi)/s
+    P    <- 1 + as.integer((paux-1)/s)
 
-  Phi0 <- matrix(0, nrow=s, ncol=s) # ver elemento (s,1)
-  for(i in 1:s){
-    for(j in 1:s){
-      if(i==j){ Phi0[i,j] <- 1 }
-      if(j>i) { Phi0[i,j] <- 0 }
-      if(j<i && (i-j) <= paux) { Phi0[i,j] <- -phi[i-j,i] }
+    Phi0 <- diag( s ) # ver elemento (s,1)
+
+    for(i in 2:s){
+        for(j in 1:(i-1)){
+            if( (i-j) <= paux ) 
+                Phi0[i,j] <- -phi[i-j,i]
+        }
     }
-  }
 
   for(k in 1:P){
-    #Phik <- matrix(0, nrow=s, ncol=s*P)
     Phik <- matrix(0, nrow=s, ncol=s)
     for(i in 1:s){
       for(j in 1:s)
@@ -921,15 +918,12 @@ setMethod("show", "MVPIAR",
   Phi0 <- MPhi[,1:s]
   Phi1 <- MPhi[,(s+1):(2*s)]
 
-  Gamma <- solve(Phi0) %*% Phi1
-  Phi01ev <- eigen(Gamma, only.values = TRUE)$values
-  tvias <- Gamma %*% solve(Phi0)  # Time-varing impact of accumulation of shocks
+  Phi0.inv <- solve( Phi0 )
+  tmp      <- Phi0.inv %*% Phi1
 
-  list(Phi0=Phi0, Phi1=Phi1, Phi01ev=Phi01ev, tvias=tvias)
+  list(Phi0=Phi0, Phi1=Phi1, Phi01ev = eigen(tmp, only.values = TRUE)$values, tvias = tmp %*% Phi0.inv )
 }
 
-##~ Ver hacer método hasta obtener seas.data.
-##~ ver usar cbind.ts.
 bbplot <- function(wts)
 {
   colour <- c("SlateBlue","SeaGreen","red","magenta")
@@ -974,51 +968,47 @@ bbplot <- function(wts)
 }
 
 plotpdiff <- function(x){
-  if (!(class(x) == "fit.piartsm"))
-    stop("\n Object is not of class 'fit.piartsm'.\n")
+    if ( class(x) != "fit.piartsm" )
+        stop("\n Object is not of class 'fit.piartsm'.\n")
 
-  opar <- par(las=1)
-  layout(matrix(c(1, 1, 2, 3), 2 , 2, byrow=TRUE))
-  plot(x@pdiff.data, main="Periodically differenced data", ylab="", xlab="")
-  bbplot(x@pdiff.data)
-  monthplot(x@pdiff.data, ylab="")
-  ##acf(x@pdiff.data, main="Autocorrelations", ylab="", na.action=na.pass)
-  ##pacf(x@pdiff.data, main="Partial autocorrelations", ylab="", na.action=na.pass)
-  par(opar)
+    opar <- par(las=1)
+    layout(matrix(c(1, 1, 2, 3), 2 , 2, byrow=TRUE))
+    plot(x@pdiff.data, main="Periodically differenced data", ylab="", xlab="")
+    bbplot(x@pdiff.data)
+    monthplot(x@pdiff.data, ylab="")
+    par(opar)
 }
 ##~ monthplot, main="Seasonal subseries"
 
 acf.ext1 <- function(wts, transf.type, perdiff.coeffs, type, lag.max, showcat, plot)
 {
 
-  switch(transf.type,
-    orig    = out <- acf(wts, type=type, lag.max=lag.max,
-                         plot=plot, na.action=na.exclude),
-    fdiff   = out <- acf(diff(wts, lag=1), type=type, lag.max=lag.max,
-                         plot=plot, na.action=na.exclude),
-    sdiff   = out <- acf(diff(wts, lag=frequency(wts)), type=type, lag.max=lag.max,
-                         plot=plot, na.action=na.exclude),
-    fsdiff  = out <- acf(diff(diff(wts, lag=1), lag=frequency(wts)), type=type,
-                         lag.max=lag.max, plot=plot, na.action=na.exclude),
-    fdiffsd = { MLd <- c(NA, diff(wts, lag=1))
-                SDum <- SeasDummy(wts, frequency(wts), start(wts), "alg")
-                res <- lm(MLd ~ 0+SDum[,1:frequency(wts)])$residuals
-                out <- acf(res, type=type, lag.max=lag.max, plot=plot, na.action=na.exclude) },
+    if( type == "fdiff" )
+        wts <- diff(wts, lag=1)
+    if( type == "sfdiff" )
+        wts <- diff(wts, lag=frequency(wts))
+    if( type == "fsfdiff" )
+        wts <- diff( diff(wts, lag=1), lag=frequency(wts) )
+    if( type == "fdiffsd" ){
+        MLd <- c(NA, diff(wts, lag=1))
+        SDum <- SeasDummy(wts, frequency(wts), start(wts), "alg")
+        wts <- lm(MLd ~ 0+SDum[,1:frequency(wts)])$residuals
+    }
+    if( type == "perdiff" ){
+        ML <- ret(wts, 2)
+        SDum <- SeasDummy(wts, frequency(wts), start(wts), "alg")
+        filc <- rowSums(perdiff.coeffs*SDum)
+        wts <- ML[,1] - filc * ML[,2]
+    }
+    if( type == "perdiffsd" ){
+        ML <- ret(wts, 2)
+        SDum <- SeasDummy(wts, frequency(wts), start(wts), "alg")
+        filc <- rowSums(perdiff.coeffs*SDum)
+        MLd <- ML[,1] - filc * ML[,2]
+        wts <- lm(MLd ~ 0+SDum[,1:frequency(wts)])$residuals
+    }
 
-    perdiff = { ML <- ret(wts, 2)
-                SDum <- SeasDummy(wts, frequency(wts), start(wts), "alg")
-                filc <- rowSums(perdiff.coeffs*SDum)
-                MLd <- ML[,1] - filc * ML[,2]
-                out <- acf(MLd, type=type, lag.max=lag.max, plot=plot, na.action=na.exclude) },
-
-    perdiffsd = { ML <- ret(wts, 2)
-                  SDum <- SeasDummy(wts, frequency(wts), start(wts), "alg")
-                  filc <- rowSums(perdiff.coeffs*SDum)
-                  MLd <- ML[,1] - filc * ML[,2]
-                  res <- lm(MLd ~ 0+SDum[,1:frequency(wts)])$residuals
-                  out <- acf(res, type=type, lag.max=lag.max, plot=plot, na.action=na.exclude) }
-
-  )
+  out <- acf(wts, type=type, lag.max=lag.max, plot=plot, na.action=na.exclude)
 
   se  <- 1/sqrt(out$n.used)
   tst <- out$acf/se
@@ -1026,26 +1016,21 @@ acf.ext1 <- function(wts, transf.type, perdiff.coeffs, type, lag.max, showcat, p
   ref1 <- c(1, 0.1, 0.05, 0.01, 0.001)
   ref2 <- c(" ", ".", "*", "**", "***")
 
-  pval <- pvl <- rep(NA, length(tst))
-  for(i in 1:length(tst)){
-    pval[i] <- (1-pnorm(q=abs(tst[i]), mean=0, sd=1, lower.tail=TRUE, log.p=FALSE)) * 2
-    pvl[i] <- ref2[length(which(ref1 >= pval[i]) == TRUE)]
-  }
+  pval <- ( 1 - pnorm( abs(tst), lower.tail=TRUE ) ) * 2
+  pvl  <- sapply( pval, function( x ) sum( ref1 >= x ) )
 
   if(showcat == TRUE){
-    sout <- data.frame(Lag=c(0:(length(tst)-1)), acf=round(out$acf,3), pvalue=round(pval,3), pvl)
     cat("----\n  Estimated autocorrelation function for the\n")
-    switch(transf.type,
-      orig    = cat("  original series.\n\n"),
-      fdiff   = cat("  first differences of the original series.\n\n"),
-      sdiff   = cat("  seasonal differences of the original series.\n\n"),
-      fsdiff  = cat("  fisrt and seasonal differences of the original series.\n\n"),
-      fdiffsd = cat("  residuals of the first differences on four seasonal dummy variables.\n\n"),
-      perdiff = cat("  periodic differences of the original series.\n\n"),
-      perdiffsd = cat("  residuals of the periodic differences on four seasonal dummy variables.\n\n")
-    )
+    cat( switch(transf.type,
+      orig      = "  original series.\n\n",
+      fdiff     = "  first differences of the original series.\n\n",
+      sdiff     = "  seasonal differences of the original series.\n\n",
+      fsdiff    = "  first and seasonal differences of the original series.\n\n",
+      fdiffsd   = "  residuals of the first differences on four seasonal dummy variables.\n\n",
+      perdiff   = "  periodic differences of the original series.\n\n",
+      perdiffsd = "  residuals of the periodic differences on four seasonal dummy variables.\n\n"))
 
-    print(sout)
+    print(data.frame(Lag=c(0:(length(tst)-1)), acf=round(out$acf,3), pvalue=round(pval,3), pvl) )
     cat("\n  s.e.=", round(se, 2), "\n")
     cat("  Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 \n")
   }

@@ -11,21 +11,15 @@
    }
 
    \arguments{
-      \item{wts}{a univariate time series object.
-      }
-      \item{transf.type}{a character string indicating what transformation should be applied to the data. Allowed values are "orig", "fdiff", "sdiff", "fsdiff", "fdiffsd", "perdiff", and ""perdiffsd. See details.
+      \item{wts}{a univariate time series object}
+      \item{transf.type}{a character string indicating what transformation should be applied to the data. Allowed values are "orig", "fdiff", "sdiff", "fsdiff", "fdiffsd", "perdiff", and "perdiffsd". See details.
       }
       \item{perdiff.coeffs}{a vector with the estimates coefficients for the periodic difference filter. This argument is only required when the periodic difference transformation must be applied to the data. See details.
       }
-      \item{type}{a character string giving the type of acf to be computed. Allowed values are "correlation",
-"covariance" or "partial".
-      }
-      \item{lag.max}{maximum number of lags at which to calculate the acf.
-      }
-      \item{showcat}{a logical. If TRUE, the results are printed in detail. If FALSE, the results are stored as a list object.
-      }
-      \item{plot}{a logical. If TRUE, a plot of the acf is showed.
-      }
+      \item{type}{a character string giving the type of acf to be computed. Allowed values are "correlation", "covariance" or "partial" }
+      \item{lag.max}{maximum number of lags at which to calculate the acf}
+      \item{showcat}{a logical. If TRUE, the results are printed in detail. If FALSE, the results are stored as a list object}
+      \item{plot}{a logical indicating whether a plot of the acf is printed}
    }
 
    \details{The implemented transformations are the following:
